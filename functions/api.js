@@ -5,11 +5,11 @@ const cors = require('cors')
 
 const programmingLanguages = require('../connection/programmingLanguages');
 require('dotenv').config();
-app.use(cors())
 
 const router = express.Router();
 const app = express();
 app.use(express.json())
+app.use(cors())
 const port = 3001;
 
 app.use(bodyParser.json());
