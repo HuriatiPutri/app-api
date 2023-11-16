@@ -1,29 +1,39 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const serverless = require('serverless-http');
-const cors = require('cors')
+const programmingLanguages = require('../connection/programmingLanguages');
+require('dotenv').config();
 
 const router = express.Router();
 const app = express();
+app.use(express.json())
 const port = 3001;
-app.use(cors())
 
 app.use(bodyParser.json());
 
 router.get('/', (req, res) => {
-  res.send('app is running');
+  res.send(`app is running ${process.env.HOST}`);
 });
 
-router.post('/login', (req, res) => {
-  res.send({
-    message: 'LOGIN: POST /login',
-    accessToken: '1234567890',
-    name: 'John Doe',
-    email: 'johnDoe@company.com',
-    userId: 1,
-    username: 'johnDoe',
-    role: 'user'   
-  });
+//CREATE USER
+router.post("/createUser", async (req,res, next) => {
+  try {
+    const data = await programmingLanguages.createUser(req.body);
+    res.status(data.code).send(data)
+  } catch (err) {
+    console.error(`Error while getting programming languages `, err.message);
+    next(err);
+  }
+});
+
+router.post('/login', async function(req, res, next) {
+  try {
+    const data = await programmingLanguages.getAuth(req.body.email, req.body.password);
+    res.status(data.code).send(data)
+  } catch (err) {
+    console.error(`Error while getting programming languages `, err.message);
+    next(err);
+  }
 });
 
 router.get('/posts', (req, res) => {
