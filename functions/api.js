@@ -1,8 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const serverless = require('serverless-http');
+const cors = require('cors')
+
 const programmingLanguages = require('../connection/programmingLanguages');
 require('dotenv').config();
+app.use(cors())
 
 const router = express.Router();
 const app = express();
