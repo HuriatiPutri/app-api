@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const serverless = require('serverless-http');
 const cors = require('cors')
 
-const programmingLanguages = require('../connection/programmingLanguages');
+const action = require('../connection/action');
 require('dotenv').config();
 
 const router = express.Router();
@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
 //CREATE USER
 router.post("/createUser", async (req,res, next) => {
   try {
-    const data = await programmingLanguages.createUser(req.body);
+    const data = await action.createUser(req.body);
     res.status(data.code).send(data)
   } catch (err) {
     console.error(`Error while getting programming languages `, err.message);
@@ -31,7 +31,7 @@ router.post("/createUser", async (req,res, next) => {
 
 router.post('/login', async function(req, res, next) {
   try {
-    const data = await programmingLanguages.getAuth(req.body.email, req.body.password);
+    const data = await action.getAuth(req.body.email, req.body.password);
     res.status(data.code).send(data)
   } catch (err) {
     console.error(`Error while getting programming languages `, err.message);
@@ -56,7 +56,7 @@ router.get('/posts', (req, res) => {
 
 router.get('/balance', async (req, res, next) => {
   try {
-    const data = await programmingLanguages.getBalance(req.query.userId);
+    const data = await action.getBalance(req.query.userId);
     res.status(data.code).send(data)
   } catch (err) {
     console.error(`Error while getting programming languages `, err.message);

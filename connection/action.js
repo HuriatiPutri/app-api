@@ -30,8 +30,7 @@ async function getBalance(userId){
 async function getMultiple(page = 1){
   const offset = helper.getOffset(page, config.listPerPage);
   const rows = await db.query(
-    `SELECT * 
-    FROM users LIMIT ${offset},${config.listPerPage}`
+    `SELECT * FROM users LIMIT ${offset},${config.listPerPage}`
   );
   const data = helper.emptyOrRows(rows);
   const meta = {page};
