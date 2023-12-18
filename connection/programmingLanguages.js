@@ -4,10 +4,10 @@ const config = require('./config');
 const bcrypt = require("bcrypt")
 
 async function getBalance(userId){
-    const sqlSearch = await db.query(`SELECT * FROM balance left join users on 
+    const sqlSearch = await db.query(`SELECT * FROM balances left join users on 
     users.id = balance.user_id
     WHERE balance.user_id ='${userId}'`);
-    
+
     const data = helper.emptyOrRows(sqlSearch);
     if(data.length > 0) {
         return {
