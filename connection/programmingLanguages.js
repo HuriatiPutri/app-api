@@ -109,5 +109,6 @@ async function createUser(payload){
 module.exports = {
   getMultiple,
   getAuth,
-  createUser
+  createUser,
+  getBalance
 }
