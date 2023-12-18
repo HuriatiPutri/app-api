@@ -3,6 +3,26 @@ const helper = require('../helpers/helper');
 const config = require('./config');
 const bcrypt = require("bcrypt")
 
+async function getBalance(userId){
+    const sqlSearch = await db.query(`SELECT * FROM balance WHERE userId ='${userId}'`);
+    const data = helper.emptyOrRows(sqlSearch);
+    if(data.length > 0) {
+        return {
+            message: 'success',
+            code: 200,
+            data: {
+                balance: data[0].balance
+            }
+        }
+    }else{
+        return {
+            message: 'balance does not exist',
+            code: 404,
+            data: {}
+        }
+    }
+}
+
 async function getMultiple(page = 1){
   const offset = helper.getOffset(page, config.listPerPage);
   const rows = await db.query(

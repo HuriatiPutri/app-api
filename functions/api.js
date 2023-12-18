@@ -54,6 +54,16 @@ router.get('/posts', (req, res) => {
   res.send(post);
 });
 
+router.get('/balance', async (req, res, next) => {
+  try {
+    const data = await programmingLanguages.getBalance(req.query.userId);
+    res.status(data.code).send(data)
+  } catch (err) {
+    console.error(`Error while getting programming languages `, err.message);
+    next(err);
+  }
+});
+
 app.use('/.netlify/functions/api', router)
 module.exports.handler = serverless(app);
 // app.listen(port, () => {
